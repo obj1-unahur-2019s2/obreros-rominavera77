@@ -1,0 +1,55 @@
+import obra.*
+import obreros.*
+
+describe "Obra"{
+	var obrita = new Casa(
+		ladrillos = 1000,
+		metrosDeCanio = 400,
+		fosforos = 800,
+		arandelas = 500		
+	)
+	var julian = new Albanil()
+	var mario = new Albanil(estaDeLicencia = true)
+	var lalo = new Gasista()
+	var anibal = new Gasista()
+	var martin = new Plomero()
+	
+	fixture{
+		obrita.agregarObrero(julian)
+		obrita.agregarObrero(mario)
+		obrita.agregarObrero(lalo)
+		obrita.agregarObrero(anibal)
+		obrita.agregarObrero(martin)
+		obrita.registrarJornadaLaboral()
+		}
+	
+	test "Registrar Jornada Laboral"{
+		assert.equals(900,obrita.ladrillos())
+		assert.equals(384,obrita.metrosDeCanio())
+		assert.equals(7960,obrita.fosforos())
+		assert.equals(470,obrita.arandelas())
+		assert.equals(1200,obrita.recibirLadrillos(300))
+		assert.equals(520,obrita.recibirArandelas(50))
+		assert.that(obrita.estaEnPlantilla(julian))
+	}
+}
+/*supongamos una obra que tiene entre sus materiales,
+ *  1000 ladrillos, 400 metros de caño, 
+ * 8000 fósforos y 500 arandelas. 
+ * Tiene cinco obreros en plantilla: dos albañiles, 
+ * dos gasistas y un plomero.
+ *  Uno de los albañiles está de licencia.
+
+Después de registrar una jornada laboral deben quedar:
+
+900 ladrillos (se restan los 100 que consumió el albañil disponible),
+384 metros de caño (se restan los 6 de los dos gasistas 
+* más los 10 del plomero),
+7960 fósforos (se restan 20 por cada uno de los dos gasistas), y
+470 arandelas (se restan las 30 que consumió el plomero).
+También se debe poder:
+
+registrar la recepción de una cantidad de ladrillos.
+lo mismo con cada tipo de material: metros de caño, fósforos, etc..
+poder preguntarle a una obra si tiene 
+* a un determinado obrero en la plantilla. */
